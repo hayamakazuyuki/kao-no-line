@@ -1,0 +1,31 @@
+{% extends "base.html" -%}
+{% from "_macros.html" import render_register_login_field, render_login_field_check, render_field,
+render_login_form_error %}
+{% block content -%}
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-6 col-md-3 mt-4">
+        <div style="text-align:center;">
+            <img class="mb-4" src="../static/img/kao-no-line-logo.png" alt="kao no line logo" width="55" height="55">
+            <h1 class="h4 mb-3 fw-light">ログイン</h1>
+        </div>
+        <div class="mt-5">
+        {{ render_login_form_error(form.email, form.password, form.remember, form.csrf_token) }}
+
+        <form action="/login" method="POST" name="login_user_form">
+            {{ form.hidden_tag() }}
+            {{ render_register_login_field(form.email, 'メールアドレス', class_="form-control form-control-sm
+            border-top-0 border-start-0 border-end-0 shadow-sm") }}
+            {{ render_register_login_field(form.password, 'パスワード', class_="form-control form-control-sm
+            border-top-0 border-start-0 border-end-0 shadow-sm") }}
+            {{ render_login_field_check(form.remember, '記憶する', class_="form-check-input") }}
+            <div class="d-grid gap-2">
+            {{ render_field(form.submit, class_="btn btn-primary btn-sm shadow-sm", value="ログイン") }}
+            </div>
+        </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

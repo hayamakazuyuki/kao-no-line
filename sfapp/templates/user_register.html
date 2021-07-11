@@ -1,0 +1,33 @@
+{% extends "base.html" -%}
+{% from "_macros.html" import render_register_login_field, render_field %}
+
+{% block content -%}
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-6 col-md-3 mt-4">
+        <div style="text-align:center;">
+            <img class="mb-4" src="../static/img/kao-no-line-logo.png" alt="kao no line logo" width="55" height="55">
+            <h1 class="h4 mb-3 fw-light">ユーザー登録</h1>
+        </div>
+        <div class="mt-5">
+
+        <form action="/user_register" method="POST" name="register_user_form">
+            {{ form.hidden_tag() }}
+            {{ render_register_login_field(form.last_name, 'Last Name', class_="form-control form-control-sm
+            border-top-0 border-start-0 border-end-0 shadow-sm") }}
+            {{ render_register_login_field(form.first_name, 'First Name', class_="form-control form-control-sm
+            border-top-0 border-start-0 border-end-0 shadow-sm") }}
+            {{ render_register_login_field(form.email, 'email', class_="form-control form-control-sm
+            border-top-0 border-start-0 border-end-0 shadow-sm") }}
+            {{ render_register_login_field(form.password, 'Password', class_="form-control form-control-sm
+            border-top-0 border-start-0 border-end-0 shadow-sm") }}
+            <div class="d-grid gap-2">
+            {{ render_field(form.submit, class_="btn btn-primary btn-sm shadow-sm", value="登録") }}
+            </div>
+        </form>
+        </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
