@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from flask_login import login_required, login_user, logout_user
+from datetime import datetime
 from sfapp import db
-from ..models import User
+from ..models import User, Post
 from ..forms import RegisterForm, LoginForm
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -12,7 +13,11 @@ main = Blueprint('main', __name__)
 @login_required
 def index():
     page = request.args.get('page', 1, type=int)
-    return render_template('index.html')
+    tasks = Post.query.order_by(Post.id.desc()).paginate(page=page, per_page=20)
+    today = datetime.today()
+    strtoday = today.strftime('%Y-%m-%d')
+
+    return render_template('index.html', tasks=tasks, strtoday=strtoday)
 
 
 @main.route('/completed')
