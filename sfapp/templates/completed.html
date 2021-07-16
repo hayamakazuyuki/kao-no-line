@@ -3,8 +3,8 @@
 {% include "navbar.html" -%}
 {% include "message_flashing.html" -%}
 <div class="container mt-4">
+    <h1 class="h3 mt-3">確認済み案件</h1>
     <div class="mt-5 col-md-5 mx-auto">
-        <h1 class="h3">対応済み案件</h1>
         <form action="/completed" method="GET">
             <div class="input-group">
                 <input type="search" class="form-control rounded" placeholder="キーワード"
@@ -13,6 +13,19 @@
             </div>
         </form>
     </div>
+        <p>
+            {% for page_num in tasks.iter_pages(left_edge=3, right_edge=2) %}
+            {% if page_num %}
+            {% if tasks.page == page_num %}
+            <a class="" href="{{ url_for('main.completed', page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+            <a class="text-decoration-none" href="{{ url_for('main.completed', page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+            {% else %}
+            ...
+            {% endif %}
+            {% endfor %}
+        </p>
 
         <table class="table table-sm table-hover mt-3">
             <thead>
@@ -21,18 +34,22 @@
                 <th>投稿日</th>
                 <th>投稿者</th>
                 <th class="text-center">内容</th>
-                <th>対応者</th>
-                <th>完了日</th>
+                <th>確認者</th>
+                <th>確認日</th>
             </tr>
             </thead>
+            <tbody>
+            {% for task in tasks.items %}
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ task.id }}</td>
+                <td>{{ task.posted_at }}</td>
+                <td>{{ task.display_name }}</td>
+                <td>{{ task.message|truncate(20) }}</td>
                 <td></td>
                 <td></td>
             </tr>
+            {% endfor %}
+            </tbody>
         </table>
     </div></div>
 

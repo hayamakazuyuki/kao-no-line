@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user
 from datetime import datetime
 from sfapp import db
@@ -13,7 +13,7 @@ main = Blueprint('main', __name__)
 @login_required
 def index():
     page = request.args.get('page', 1, type=int)
-    tasks = Post.query.order_by(Post.id.desc()).paginate(page=page, per_page=20)
+    tasks = Post.query.filter_by(checked=None).order_by(Post.id.desc()).paginate(page=page, per_page=20)
     today = datetime.today()
     strtoday = today.strftime('%Y-%m-%d')
 
@@ -23,14 +23,23 @@ def index():
 @main.route('/completed')
 @login_required
 def completed():
-    if not request.args:
-        return render_template('completed.html')
+    page = request.args.get('page', 1, type=int)
+    checked_tasks = Post.query.filter_by(checked=1).order_by(Post.id.desc()).paginate(page=page, per_page=20)
 
-    else:
-        search_string = request.args.get('search_string')
-        search_value = "%{}%".format(search_string)
-        page = request.args.get('page', default=1, type=int)
-        return render_template('completed.html', search_string=search_string)
+    return render_template('completed.html', tasks=checked_tasks, page=page)
+
+
+@main.route('/post/<int:id>', methods=['GET', 'POST'])
+def post_detail(id):
+    post = Post.query.get(id)
+    if request.method == 'POST':
+        post.checked = request.form['checked']
+        db.session.commit()
+
+        flash('投稿を確認済みにしました。', 'success')
+        return redirect(url_for('main.index'))
+
+    return render_template('post_detail.html', post=post)
 
 
 @main.route('/user_register', methods=['GET', 'POST'])

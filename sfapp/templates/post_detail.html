@@ -1,0 +1,43 @@
+{% extends "base.html" -%}
+{% block content -%}
+{% include "navbar.html" -%}
+{% include "message_flashing.html" -%}
+<div class="container mt-4">
+    <div class="mt-5">
+        <h1 class="h3">投稿詳細</h1>
+
+        <div class="row ms-3">
+            <div class="col-sm-2"><p>ID</p></div>
+            <div class="col-sm"><p>{{ post.id }}</p></div>
+        </div>
+        <div class="row ms-3">
+            <div class="col-sm-2"><p>投稿日時</p></div>
+            <div class="col-sm"><p>{{ post.posted_at }}</p></div>
+        </div>
+        <div class="row ms-3">
+            <div class="col-sm-2"><p>投稿者</p></div>
+            <div class="col-sm"><p>{{ post.display_name }}</p></div>
+        </div>
+        <div class="row ms-3">
+            <div class="col-sm-2"><p>グループ</p></div>
+            <div class="col-sm"><p>{{ post.group_id }}</p></div>
+        </div>
+        <div class="row ms-3">
+            <div class="col-sm-2"><p>メッセージ</p></div>
+            <div class="col-sm"><p>{{ post.message }}</p></div>
+        </div>
+
+        <div class="row ms-3 mt-4">
+            <form name="complete" action="/post/{{ post.id }}" method="POST">
+                <input type="hidden" name="post_id" value="{{ post.id }}">
+                <input type="hidden" name="checked_by" value="{{ current_user.id }}">
+                <input type="hidden" name="checked" value="1">
+                <label for="memo">メモ</label>
+                <input type="text" name="memo" id="memo">
+                <button class="btn btn-primary btn-sm" type="submit">完了</button></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

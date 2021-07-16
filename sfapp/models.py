@@ -20,6 +20,16 @@ class Post(db.Model):
     message_id = db.Column(db.String(255), nullable=False)
     message = db.Column(db.Text(), nullable=False)
     posted_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    checked = db.Column(db.Integer, nullable=True)
 
+
+"""class Status(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    status = db.Column(db.Integer, nullable=False)
+    checked_by = db.Column(db.Integer, nullable=False)
+    checked_at = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    memo = db.Column(db.String, nullable=True)
+"""
 
 admin.add_view(ModelView(User, db.session))

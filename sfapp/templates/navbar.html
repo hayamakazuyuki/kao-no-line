@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
   <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img src="{{ url_for('static', filename='img/kao-no-line-logo.png') }}" width=33 height=33
@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse ms-5" id="navbarCollapse">
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item pe-4 {% if request.path == '/completed' %}active{% endif %}">
-                <a class="nav-link" href="{{ url_for('main.completed')}}">対応済み案件</a>
+                <a class="nav-link" href="{{ url_for('main.completed')}}">確認済み案件</a>
             </li>
         </ul>
         <ul class="navbar-nav">
