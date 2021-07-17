@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user
 from datetime import datetime
 from sfapp import db
-from ..models import User, Post
+from ..models import User, Post, Action
 from ..forms import RegisterForm, LoginForm
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -29,10 +29,28 @@ def completed():
     return render_template('completed.html', tasks=checked_tasks, page=page)
 
 
+"""
 @main.route('/post/<int:id>', methods=['GET', 'POST'])
 def post_detail(id):
     post = Post.query.get(id)
     if request.method == 'POST':
+        posted = request.form
+
+        return posted
+
+    return render_template('post_detail.html', post=post)
+"""
+
+
+@main.route('/post/<int:id>', methods=['GET', 'POST'])
+def post_detail(id):
+    post = Post.query.get(id)
+    if request.method == 'POST':
+        action = Action()
+        action.post_id = request.form['post_id']
+        action.checked_by = request.form['checked_by']
+        action.memo = request.form.get('memo')
+        db.session.add(action)
         post.checked = request.form['checked']
         db.session.commit()
 

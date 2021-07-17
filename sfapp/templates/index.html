@@ -3,47 +3,47 @@
 {% include "navbar.html" -%}
 {% include "message_flashing.html" -%}
 <div class="container mt-4">
-    <div class="mt-5">
-        <h1 class="h3">未対応案件一覧</h1>
-        <p>{{ strtoday }} <a href="/" class="text-decoration-none ms-5">
-            <i class="bi bi-arrow-clockwise"></i> 表示を更新</a></p>
-        <p>
-            {% for page_num in tasks.iter_pages(left_edge=3, right_edge=2) %}
-            {% if page_num %}
-            {% if tasks.page == page_num %}
-            <a class="" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
-            {% else %}
-            <a class="text-decoration-none" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
-            {% endif %}
-            {% else %}
-            ...
-            {% endif %}
-            {% endfor %}
-        </p>
+    <h1 class="h3">新規投稿一覧</h1>
+    <p>{{ strtoday }} <a href="/" class="text-decoration-none ms-5">
+        <i class="bi bi-arrow-clockwise"></i> 表示を更新</a>
+    </p>
+    <p>
+        {% for page_num in tasks.iter_pages(left_edge=3, right_edge=2) %}
+        {% if page_num %}
+        {% if tasks.page == page_num %}
+        <a class="" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+        <a class="text-decoration-none" href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+    </p>
 
-        <table class="table table-sm table-hover mt-3">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>投稿日</th>
-                <th>投稿者</th>
-                <th>グループ</th>
-                <th class="text-center">投稿</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for task in tasks.items %}
-            <tr>
-                <td>{{ task.id }}</td>
-                <td>{{ task.posted_at }}</td>
-                <td>{{ task.display_name }}</td>
-                <td>{{ task.group_id|truncate(8) }}</td>
-                <td><a href="/post/{{ task.id }}"  class="text-decoration-none">
-                    {{ task.message|truncate(20) }}</a></td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div></div>
+    <table class="table table-sm table-hover mt-3">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>投稿日</th>
+            <th>投稿者</th>
+            <th>グループ</th>
+            <th class="text-center">投稿</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks.items %}
+        <tr>
+            <td>{{ task.id }}</td>
+            <td>{{ task.posted_at }}</td>
+            <td>{{ task.display_name }}</td>
+            <td>{{ task.group_id|truncate(8) }}</td>
+            <td><a href="/post/{{ task.id }}"  class="text-decoration-none">
+                {{ task.message|truncate(20) }}</a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock %}
