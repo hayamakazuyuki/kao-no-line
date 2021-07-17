@@ -30,7 +30,7 @@
         {% if post.action is not none %}
         <div class="row ms-3">
             <div class="col-sm-2"><p>確認者</p></div>
-            <div class="col-sm"><p>{{ post.action.checked_by }}</p></div>
+            <div class="col-sm"><p>{{ post.action.user.last_name }}</p></div>
         </div>
         <div class="row ms-3">
             <div class="col-sm-2"><p>確認日</p></div>

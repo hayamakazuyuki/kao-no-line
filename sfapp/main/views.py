@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user
-from datetime import datetime
+from datetime import datetime, timedelta
 from sfapp import db
 from ..models import User, Post, Action
 from ..forms import RegisterForm, LoginForm
@@ -15,7 +15,7 @@ def index():
     page = request.args.get('page', 1, type=int)
     tasks = Post.query.filter_by(checked=None).order_by(Post.id.desc()).paginate(page=page, per_page=20)
     today = datetime.today()
-    strtoday = today.strftime('%Y-%m-%d')
+    strtoday = today.strftime('%Y-%m-%d %H:%M')
 
     return render_template('index.html', tasks=tasks, strtoday=strtoday)
 
@@ -27,19 +27,6 @@ def completed():
     checked_tasks = Post.query.filter_by(checked=1).order_by(Post.id.desc()).paginate(page=page, per_page=20)
 
     return render_template('completed.html', tasks=checked_tasks, page=page)
-
-
-"""
-@main.route('/post/<int:id>', methods=['GET', 'POST'])
-def post_detail(id):
-    post = Post.query.get(id)
-    if request.method == 'POST':
-        posted = request.form
-
-        return posted
-
-    return render_template('post_detail.html', post=post)
-"""
 
 
 @main.route('/post/<int:id>', methods=['GET', 'POST'])
