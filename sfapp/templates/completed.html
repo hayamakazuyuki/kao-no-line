@@ -49,7 +49,7 @@
                 <td>{{ task.group_id|truncate(8) }}</td>
                 <td><a href="/post/{{ task.id }}"  class="text-decoration-none">
                     {{ task.message|truncate(20) }}</a></td>
-                <td>{{ task.action.checked_by }}</td>
+                <td>{{ task.action.user.last_name }}</td>
                 <td>{{ task.action.checked_at }}</td>
                 <td>{{ task.action.memo|truncate(5) }}</td>
             </tr>
