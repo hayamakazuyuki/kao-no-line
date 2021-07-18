@@ -37,7 +37,7 @@
             <td>{{ task.id }}</td>
             <td>{{ task.posted_at }}</td>
             <td>{{ task.display_name }}</td>
-            <td><span class="">{{ task.group_id|truncate(8) }}</span></td>
+            <td><span class="border rounded">{{ task.lgroup.name }}</span></td>
             <td><a href="/post/{{ task.id }}"  class="text-decoration-none">
                 {{ task.message|truncate(20) }}</a></td>
         </tr>

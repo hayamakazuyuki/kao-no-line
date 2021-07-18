@@ -1,12 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, login_user, logout_user
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from sfapp import db
 from ..models import User, Post, Action
 from ..forms import RegisterForm, LoginForm
 from werkzeug.security import generate_password_hash, check_password_hash
 
 main = Blueprint('main', __name__)
+JST = timezone(timedelta(hours=+9), 'JST')
 
 
 @main.route('/')
@@ -14,7 +15,7 @@ main = Blueprint('main', __name__)
 def index():
     page = request.args.get('page', 1, type=int)
     tasks = Post.query.filter_by(checked=None).order_by(Post.id.desc()).paginate(page=page, per_page=20)
-    today = datetime.today()
+    today = datetime.now(JST)
     strtoday = today.strftime('%Y-%m-%d %H:%M')
 
     return render_template('index.html', tasks=tasks, strtoday=strtoday)
