@@ -46,7 +46,7 @@
             <td>{{ task.id }}</td>
             <td>{{ task.posted_at }}</td>
             <td>{{ task.display_name }}</td>
-            <td>{{ task.lgroup.name }}</td>
+            <td><span class="badge {{ task.lgroup.colour }}">{{ task.lgroup.name }}</span></td>
             <td><a href="/post/{{ task.id }}"  class="text-decoration-none">
                 {{ task.message|truncate(20) }}</a></td>
             <td>{{ task.action.user.last_name }}</td>
